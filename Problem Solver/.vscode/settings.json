@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Problem Solver.sln"
+    "dotnet.defaultSolution": "Jeiromanta.sln"
 }
