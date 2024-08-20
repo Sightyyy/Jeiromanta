@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Accessibility;
 
@@ -11,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask terrainLayer;
     public Rigidbody rb;
     public SpriteRenderer sr;
+    [SerializeField] Transform cameraTransform;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -35,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
         float y = Input.GetAxis("Vertical");
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
+        moveDir = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * moveDir;
+        moveDir.Normalize();
 
         if(x != 0 && x < 0)
         {
@@ -43,6 +47,18 @@ public class PlayerMovement : MonoBehaviour
         else if(x != 0 && x > 0)
         {
             sr.flipX = false;
+        }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }
