@@ -8,13 +8,17 @@ public class PlayerInteract : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
-            float interactRange = 5f;
+            float interactRange = 3f;
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
             foreach (Collider collider in colliderArray)
             {
-                if(collider.TryGetComponent(out NPCInteractable npcInteractable))
+                if(collider.CompareTag("interactable"))
                 {
-                    npcInteractable.Interact();
+                    NPCInteractable npcInteractable = collider.GetComponent<NPCInteractable>();
+                    if (npcInteractable != null)
+                    {
+                        npcInteractable.Interact();
+                    }
                 }
             }
         }

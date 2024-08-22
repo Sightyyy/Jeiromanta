@@ -1,11 +1,11 @@
-using System.Collections; // Tambahkan ini untuk menggunakan IEnumerator
+using System.Collections;
 using UnityEngine;
 
 public class NPCInteractable : MonoBehaviour
 {
     private ChatBubbleCommand chatBubbleCommand;
-    private bool canInteract = true; // Status apakah bisa melakukan interaksi
-    public float interactionCooldown = 5f; // Cooldown interaksi untuk menghindari spam
+    private bool canInteract = true;
+    public float interactionCooldown = 5f;
 
     void Start()
     {
@@ -30,11 +30,10 @@ public class NPCInteractable : MonoBehaviour
         }
     }
 
-    // Coroutine untuk memberikan cooldown pada interaksi
     IEnumerator InteractionCooldown()
     {
         canInteract = false;
-        yield return new WaitForSeconds(interactionCooldown); // Tunggu sesuai dengan waktu cooldown
-        canInteract = true; // Reset status interaksi
+        yield return new WaitForSeconds(interactionCooldown);
+        canInteract = true;
     }
 }
