@@ -5,8 +5,8 @@ using UnityEngine;
 public class HackPanelInteract : MonoBehaviour
 {
     private bool canInteract = true;
-    public GameObject Minigame;
-    public GameObject Player;
+    public GameObject mazeCanvas;
+    public GameObject player;
 
     public void Interact()
     {
@@ -18,19 +18,19 @@ public class HackPanelInteract : MonoBehaviour
 
         void OnInteract()
         {
-            PlayerMovement playerMovement = Player.GetComponent<PlayerMovement>();
+            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
             if (playerMovement != null)
             {
                 playerMovement.enabled = false;
             }
 
-            PlayerInteract playerInteract = Player.GetComponent<PlayerInteract>();
+            PlayerInteract playerInteract = player.GetComponent<PlayerInteract>();
             if (playerInteract != null)
             {
                 playerInteract.enabled = false;
             }
 
-            Minigame.SetActive(true);
+            mazeCanvas.SetActive(true);
         }
     }
 }
