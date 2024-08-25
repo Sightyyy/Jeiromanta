@@ -2348,7 +2348,7 @@ RectTransform:
   m_GameObject: {fileID: 634085084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.33, y: 0.33, z: 0.33}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 441264582}
@@ -2371,8 +2371,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 1704125192526267497, guid: 89b17f42b44ffdd42add3e89f4bebf92, type: 3}
-  mazeSize: {x: 10, y: 10}
-  mazeCanvasPosition: {fileID: 0}
+  mazePlayerPrefab: {fileID: 924887469978463956, guid: 81af1e33bda2577428653673c1006864, type: 3}
+  mazeSize: {x: 25, y: 10}
+  mazeGeneratorRotation: {fileID: 634085085}
 --- !u!1 &651974834
 GameObject:
   m_ObjectHideFlags: 3

@@ -7,7 +7,9 @@ public enum NodeState
 {
     Available,
     Current,
-    Completed
+    Completed,
+    Start,
+    End
 }
 
 public class MazeNode : MonoBehaviour
@@ -15,11 +17,24 @@ public class MazeNode : MonoBehaviour
     [SerializeField] GameObject[] walls;
     [SerializeField] MeshRenderer floor;
 
+    public void RemoveWall(int wallToRemove)
+    {
+        walls[wallToRemove].gameObject.SetActive(false);
+    }
+
     public void SetState(NodeState state)
     {
         if(state == NodeState.Available)
         {
             floor.material.color = Color.white;
+        }
+        else if(state == NodeState.Start)
+        {
+            floor.material.color = Color.black;
+        }
+        else if(state == NodeState.End)
+        {
+            floor.material.color = Color.green;
         }
         else if(state == NodeState.Current)
         {
