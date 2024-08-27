@@ -15,15 +15,14 @@ public class PauseManager : MonoBehaviour
         if (mazePlayerMovement != null)
         {
             mazePlayerMovement.enabled = false;
-            Debug.Log("MazePlayerMovement found and disabled");
+            //Debug.Log("MazePlayerMovement found and disabled");
         }
         else
         {
-            Debug.LogWarning("MazePlayerMovement not found on mazePlayer");
+            //Debug.LogWarning("MazePlayerMovement not found on mazePlayer");
         }
-        mazeCanvas.SetActive(false);
         pauseCanvas.SetActive(true);
-        Debug.Log("Changed to Pause Menu");
+        //Debug.Log("Changed to Pause Menu");
     }
 
     public void Resume()
@@ -38,11 +37,18 @@ public class PauseManager : MonoBehaviour
 
     public void Quit()
     {
+        player = GameObject.Find("Player");
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
         if (playerMovement != null)
         {
             playerMovement.enabled = true;
         }
+        MazePlayerMovement mazePlayerMovement = mazePlayer.GetComponent<MazePlayerMovement>();
+        if (mazePlayerMovement != null)
+        {
+            mazePlayerMovement.enabled = true;
+        }
+        MazeGenerator.DestroyMazePlayer();
         pauseCanvas.SetActive(false);
         mazeCanvas.SetActive(false);
     }

@@ -6,7 +6,16 @@ public class HackPanelInteract : MonoBehaviour
 {
     private bool canInteract = true;
     public GameObject mazeCanvas;
-    public GameObject player;
+    private GameObject player;
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player = other.gameObject;
+            Debug.Log("Hack Panel Interact");
+        }
+    }
 
     public void Interact()
     {
@@ -15,22 +24,24 @@ public class HackPanelInteract : MonoBehaviour
             Debug.Log("Interact!");
             OnInteract();
         }
+    }
 
-        void OnInteract()
+    public void OnInteract()
+    {
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
         {
-            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-            if (playerMovement != null)
-            {
-                playerMovement.enabled = false;
-            }
-
-            PlayerInteract playerInteract = player.GetComponent<PlayerInteract>();
-            if (playerInteract != null)
-            {
-                playerInteract.enabled = false;
-            }
-
-            mazeCanvas.SetActive(true);
+            playerMovement.enabled = false;
         }
+
+        // PlayerInteract playerInteract = player.GetComponent<PlayerInteract>();
+        // if (playerInteract != null)
+        // {
+        //     playerInteract.enabled = false;
+        // }
+        mazeCanvas.SetActive(true);
+        mazeCanvas.GetComponentInChildren<MazeGenerator>().DestroyMazeNodes();
+        MazeGenerator.DestroyMazePlayer();
+        mazeCanvas.GetComponentInChildren<MazeGenerator>().NewMaze();
     }
 }

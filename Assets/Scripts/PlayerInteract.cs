@@ -8,6 +8,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("E is pressed");
             float interactRange = 3f;
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
             foreach (Collider collider in colliderArray)
@@ -25,6 +26,7 @@ public class PlayerInteract : MonoBehaviour
                     HackPanelInteract hpInteract = collider.GetComponent<HackPanelInteract>();
                     if (hpInteract != null)
                     {
+                        Debug.Log("Pass");
                         hpInteract.Interact();
                     }
                 }

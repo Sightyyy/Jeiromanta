@@ -64,15 +64,15 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
-    private void OnApplicationFocus(bool focus)
-    {
-        if (focus)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
+    // private void OnApplicationFocus(bool focus)
+    // {
+    //     if (focus)
+    //     {
+    //         Cursor.lockState = CursorLockMode.Locked;
+    //     }
+    //     else
+    //     {
+    //         Cursor.lockState = CursorLockMode.None;
+    //     }
+    // }
 }

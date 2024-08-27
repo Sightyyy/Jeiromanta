@@ -1,36 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MazeGenerator : MonoBehaviour
 {
     [SerializeField] MazeNode nodePrefab;
     [SerializeField] GameObject mazePlayerPrefab;
+    [SerializeField] GameObject mazeGenerator;
+    [SerializeField] GameObject endPoint;
     [SerializeField] Vector2Int mazeSize;
     [SerializeField] Transform mazeGeneratorRotation;
-    private Vector3 startPointPosition; // Store the start point position
+    public Vector3 startPointPosition, endPointPosition; // Store the start point position
+    private static GameObject mazePlayer;
+    public bool isWin = false;
+    
 
-    private void Start()
+    public void NewMaze()
     {
         GenerateMazeInstant(mazeSize);
         SpawnMazePlayer();
         // StartCoroutine(GenerateMaze(mazeSize));
     }
 
+    private void Update()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(endPoint.transform.position, endPoint.transform.forward, out hit, -10f))
+        {
+            if(hit.collider.gameObject.name == "Player")
+            {
+                Debug.Log("You win!");
+            }
+        }
+    }
+
     void GenerateMazeInstant(Vector2Int size)
     {
         List<MazeNode> nodes = new List<MazeNode>();
+        mazeGeneratorRotation.rotation = Quaternion.Euler(0, 0, 0);
 
         // Create nodes
         for (int x = 0; x < size.x; x++)
         {
             for(int y = 0; y < size.y; y++)
             {
-                Vector3 nodePos = new Vector3(x - (size.x / 2f), 5f, y - (size.y / 2f) + 103f);
+                Vector3 nodePos = new Vector3(x - (size.x / 2f), 4f, y - (size.y / 2f) + 103f);
                 MazeNode newNode = Instantiate(nodePrefab, nodePos, Quaternion.identity, transform);
                 nodes.Add(newNode);
             }
         }
+        
         mazeGeneratorRotation.rotation = Quaternion.Euler(-90f, 0, 0);
 
         List<MazeNode> currentPath = new List<MazeNode>();
@@ -148,6 +170,7 @@ public class MazeGenerator : MonoBehaviour
         if (endNode != null)
         {
             endNode.SetState(NodeState.End);
+            endPoint.transform.position = endNode.transform.position;
         }
     }
 
@@ -273,7 +296,20 @@ public class MazeGenerator : MonoBehaviour
         if (mazePlayerPrefab != null)
         {
             // Instantiate the maze player at the start point
-            Instantiate(mazePlayerPrefab, startPointPosition, Quaternion.identity);
+            mazePlayer = Instantiate(mazePlayerPrefab, startPointPosition, Quaternion.identity);
+        }
+    }
+
+    public static void DestroyMazePlayer()
+    {
+        Destroy(mazePlayer);
+    }
+
+    public void DestroyMazeNodes()
+    {
+        foreach(Transform child in mazeGenerator.transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 }
