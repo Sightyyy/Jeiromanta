@@ -10,23 +10,27 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
-        Debug.Log("Pause function called");
-        MazePlayerMovement mazePlayerMovement = mazePlayer.GetComponent<MazePlayerMovement>();
-        if (mazePlayerMovement != null)
+        // Access the static MazePlayer property from MazeGenerator
+        GameObject mazePlayer = MazeGenerator.MazePlayer;
+
+        if (mazePlayer != null)
         {
-            mazePlayerMovement.enabled = false;
-            //Debug.Log("MazePlayerMovement found and disabled");
+            // Get the MazePlayerMovement component from the instantiated player
+            MazePlayerMovement mazePlayerMovement = mazePlayer.GetComponent<MazePlayerMovement>();
+
+            // Disable the movement script
+            if (mazePlayerMovement != null)
+            {
+                mazePlayerMovement.enabled = false;
+            }
         }
-        else
-        {
-            //Debug.LogWarning("MazePlayerMovement not found on mazePlayer");
-        }
+        // Activate the pause canvas
         pauseCanvas.SetActive(true);
-        //Debug.Log("Changed to Pause Menu");
     }
 
     public void Resume()
     {
+        Debug.Log("Resume button is called");
         MazePlayerMovement mazePlayerMovement = mazePlayer.GetComponent<MazePlayerMovement>();
         if (mazePlayerMovement != null)
         {

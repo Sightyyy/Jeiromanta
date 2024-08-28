@@ -15,7 +15,7 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] Transform mazeGeneratorRotation;
     public Vector3 startPointPosition, endPointPosition; // Store the start point position
     private static GameObject mazePlayer;
-    public bool isWin = false;
+    public static GameObject MazePlayer => mazePlayer;
     
 
     public void NewMaze()
@@ -23,18 +23,6 @@ public class MazeGenerator : MonoBehaviour
         GenerateMazeInstant(mazeSize);
         SpawnMazePlayer();
         // StartCoroutine(GenerateMaze(mazeSize));
-    }
-
-    private void Update()
-    {
-        RaycastHit hit;
-        if(Physics.Raycast(endPoint.transform.position, endPoint.transform.forward, out hit, -10f))
-        {
-            if(hit.collider.gameObject.name == "Player")
-            {
-                Debug.Log("You win!");
-            }
-        }
     }
 
     void GenerateMazeInstant(Vector2Int size)

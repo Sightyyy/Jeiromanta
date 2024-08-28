@@ -1,12 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HackPanelInteract : MonoBehaviour
 {
     private bool canInteract = true;
     public GameObject mazeCanvas;
+    [SerializeField] private GameObject forceField;
+    [SerializeField] private GameObject endPoint;
     private GameObject player;
+    private bool mazeWin;
+    private void Update()
+    {
+        mazeWin = endPoint.GetComponent<MazeWin>().isWin;
+        if(mazeWin == true)
+        {
+            mazeCanvas.SetActive(false);
+            forceField.SetActive(false);
+            MazeGenerator.DestroyMazePlayer();
+            player = GameObject.Find("Player");
+            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.enabled = true;
+            }
+        }
+    }
     
     private void OnTriggerEnter(Collider other)
     {
