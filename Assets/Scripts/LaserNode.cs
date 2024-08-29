@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class LaserNode : MonoBehaviour
 {
     [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private float laserDistance = 8f;
+    public float laserDistance = 8f;
     [SerializeField] private LayerMask ignoreMask;
     [SerializeField] private UnityEvent OnHitTarget;
 

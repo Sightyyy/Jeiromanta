@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HackPanelInteract : MonoBehaviour
+public class MainHPInteract : MonoBehaviour
 {
     private bool canInteract = true;
     public GameObject mazeCanvas;
     [SerializeField] private GameObject endPoint;
-    [SerializeField] private GameObject forcefield;
+    [SerializeField] private GameObject mainDoor;
     [SerializeField] private GameObject hackPanel;
     private GameObject player;
     private bool mazeWin;
@@ -26,7 +26,7 @@ public class HackPanelInteract : MonoBehaviour
             {
                 playerMovement.enabled = true;
             }
-            forcefield.SetActive(false);
+            mainDoor.SetActive(true);
             hackPanel.SetActive(false);
         }
     }

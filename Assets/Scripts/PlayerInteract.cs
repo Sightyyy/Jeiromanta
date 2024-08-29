@@ -21,7 +21,7 @@ public class PlayerInteract : MonoBehaviour
                         npcInteractable.Interact();
                     }
                 }
-                else if(collider.CompareTag("Interactable") && collider.name.StartsWith("Hack Panel"))
+                else if(collider.CompareTag("Interactable") && collider.name.StartsWith("HackPanel"))
                 {
                     HackPanelInteract hpInteract = collider.GetComponent<HackPanelInteract>();
                     if (hpInteract != null)

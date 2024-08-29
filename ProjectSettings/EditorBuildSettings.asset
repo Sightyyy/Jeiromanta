@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dormitory.unity
     guid: 4189534b95c215e46ac3f01f27b4cc0d
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 3e96bbb5842e2734caf7b759ab10f8a2
   m_configObjects: {}
