@@ -29,12 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        bossActivation = GameObject.Find("BossStart").GetComponent<BossActivation>();
+        // bossActivation = GameObject.Find("BossStart").GetComponent<BossActivation>();
     }
 
     void Update()
     {
-        isCanDodge = bossActivation.isBossStart;
+        // isCanDodge = bossActivation.isBossStart;
         // Menangani interaksi dengan terrain
         RaycastHit hit;
         Vector3 castPos = transform.position;
