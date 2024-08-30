@@ -23,18 +23,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDir;
     private enum MovementState { idle, running }
     private BossActivation bossActivation;
-    private bool isCanDodge;
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        // bossActivation = GameObject.Find("BossStart").GetComponent<BossActivation>();
     }
 
     void Update()
     {
-        // isCanDodge = bossActivation.isBossStart;
         // Menangani interaksi dengan terrain
         RaycastHit hit;
         Vector3 castPos = transform.position;
@@ -51,12 +48,12 @@ public class PlayerMovement : MonoBehaviour
         // Input pergerakan pemain
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
+        UpdateAnimationState();
         // Check for dodge input
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= lastDodgeTime + dodgeCooldown && isCanDodge)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= lastDodgeTime + dodgeCooldown)
         {
             StartDodge();
         }
-        UpdateAnimationState();
 
         // Arah pergerakan pemain mengikuti arah kamera
         moveDir = cameraTransform.right * x + cameraTransform.forward * y;
