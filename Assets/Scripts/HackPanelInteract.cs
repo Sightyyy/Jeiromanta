@@ -20,7 +20,7 @@ public class HackPanelInteract : MonoBehaviour
         {
             mazeCanvas.SetActive(false);
             MazeGenerator.DestroyMazePlayer();
-            player = GameObject.Find("Player");
+            player = GameManager.GetCurrentPlayer();
             PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
             if (playerMovement != null)
             {

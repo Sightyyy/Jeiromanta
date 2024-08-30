@@ -11,7 +11,7 @@ public class MainHPInteract : MonoBehaviour
     [SerializeField] private GameObject mainDoor;
     [SerializeField] private GameObject hackPanel;
     private GameObject player;
-    private bool mazeWin;
+    public bool mazeWin;
 
     private void Update()
     {
@@ -20,13 +20,14 @@ public class MainHPInteract : MonoBehaviour
         {
             mazeCanvas.SetActive(false);
             MazeGenerator.DestroyMazePlayer();
-            player = GameObject.Find("Player");
+            player = GameManager.GetCurrentPlayer();
             PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
             if (playerMovement != null)
             {
                 playerMovement.enabled = true;
             }
             mainDoor.SetActive(true);
+            GameManager.AddLevel();
             hackPanel.SetActive(false);
         }
     }
