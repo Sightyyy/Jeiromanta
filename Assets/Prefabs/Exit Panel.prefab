@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1480092173297299327}
   - component: {fileID: 7031088583028650063}
   m_Layer: 0
-  m_Name: HackPanelMain
+  m_Name: Exit Panel
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

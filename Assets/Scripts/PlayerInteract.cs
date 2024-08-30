@@ -30,6 +30,15 @@ public class PlayerInteract : MonoBehaviour
                         hpInteract.Interact();
                     }
                 }
+                else if(collider.CompareTag("Interactable") && collider.name.StartsWith("Exit"))
+                {
+                    MainHPInteract mainHPInteract = collider.GetComponent<MainHPInteract>();
+                    if (mainHPInteract != null)
+                    {
+                        Debug.Log("Pass");
+                        mainHPInteract.Interact();
+                    }
+                }
             }
         }
     }

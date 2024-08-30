@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastDodgeTime;
     public float groundDist;
     public float sensitivity = 100f; // Sensitivitas gerakan kamera
+    public float slopeLimit = 60f; // Kemiringan maksimum yang bisa didaki
 
     public LayerMask terrainLayer;
     public Rigidbody rb;
@@ -45,21 +46,28 @@ public class PlayerMovement : MonoBehaviour
                 transform.position = movePos;
             }
         }
+
         // Input pergerakan pemain
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
         UpdateAnimationState();
+
         // Check for dodge input
         if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= lastDodgeTime + dodgeCooldown)
         {
             StartDodge();
         }
 
-        // Arah pergerakan pemain mengikuti arah kamera
-        moveDir = cameraTransform.right * x + cameraTransform.forward * y;
+        // Arah pergerakan pemain mengikuti arah kamera, dengan mempertimbangkan kemiringan
+        moveDir = GetSlopeAdjustedMoveDirection(cameraTransform.right * x + cameraTransform.forward * y);
         moveDir.y = 0; // Pastikan pemain tidak bergerak di sumbu Y
         moveDir.Normalize();
-        rb.velocity = moveDir * speed;
+
+        // Terapkan kecepatan pada Rigidbody
+        if (!isDodging)
+        {
+            rb.velocity = moveDir * speed;
+        }
 
         // Flipping sprite berdasarkan arah horizontal
         if (x != 0 && x < 0)
@@ -82,31 +90,30 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
+{
+    if (isDodging)
     {
-        if (isDodging)
-        {
-            Dodge();
-        }
+        Dodge();
     }
+    else
+    {
+        // Terapkan gaya dorong untuk membantu mendaki
+        Vector3 force = moveDir * speed * Time.fixedDeltaTime;
+        rb.AddForce(force, ForceMode.VelocityChange);
+    }
+}
+
     private void UpdateAnimationState()
     {
         MovementState state;
 
-        if (x > 0f || x < 0f || y > 0f || y < 0f)
+        if (x > 0f || x < 0f || y > 0f)
         {
             state = MovementState.running;
-            // if (soundManager.sfxSource.clip != soundManager.movementSound || !soundManager.sfxSource.isPlaying)
-            // {
-            //     soundManager.PlaySFXLoop(soundManager.movementSound);
-            // }
         }
         else
         {
             state = MovementState.idle;
-            // if (soundManager.sfxSource.clip == soundManager.movementSound)
-            // {
-            //     soundManager.StopSFXLoop();
-            // }
         }
         anim.SetInteger("state", (int)state);
     }
@@ -130,15 +137,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // private void OnApplicationFocus(bool focus)
-    // {
-    //     if (focus)
-    //     {
-    //         Cursor.lockState = CursorLockMode.Locked;
-    //     }
-    //     else
-    //     {
-    //         Cursor.lockState = CursorLockMode.None;
-    //     }
-    // }
+    // Fungsi untuk menyesuaikan arah gerakan sesuai dengan kemiringan
+    private Vector3 GetSlopeAdjustedMoveDirection(Vector3 inputDirection)
+{
+    RaycastHit hit;
+    if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, terrainLayer))
+    {
+        Vector3 slopeNormal = hit.normal;
+        Vector3 slopeForward = Vector3.Cross(slopeNormal, transform.right).normalized;
+        // Debug.Log("Slope Normal: " + slopeNormal);
+        // Debug.Log("Slope Forward: " + slopeForward);
+        return Vector3.ProjectOnPlane(inputDirection, slopeNormal).normalized * speed;
+    }
+    return inputDirection;
+}
+
+    private void OnDrawGizmos()
+{
+    if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, terrainLayer))
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, hit.point);
+        Gizmos.DrawRay(hit.point, hit.normal);
+    }
+}
 }
