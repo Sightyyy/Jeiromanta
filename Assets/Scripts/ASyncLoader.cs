@@ -22,13 +22,26 @@ public class ASyncLoader : MonoBehaviour
 
     IEnumerator LoadLevelAsync(string levelToLoad)
     {
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(levelToLoad);
+        // Jeda 3 detik di awal sebelum mulai memuat scene
+        yield return new WaitForSeconds(3f);
 
-        while (!loadOperation.isDone)
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(levelToLoad);
+        loadOperation.allowSceneActivation = false;  // Mencegah scene aktif otomatis
+
+        while (loadOperation.progress < 0.9f)
         {
             float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
             loadingSlider.value = progressValue;
             yield return null;
         }
+
+        // Pastikan progress bar mencapai 100%
+        loadingSlider.value = 1f;
+
+        // Jeda 1 detik setelah progress mencapai 100%
+        yield return new WaitForSeconds(2f);
+
+        // Aktifkan scene setelah jeda 1 detik
+        loadOperation.allowSceneActivation = true;
     }
 }
