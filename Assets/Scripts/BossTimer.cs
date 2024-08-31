@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class BossTimer : MonoBehaviour
 {
-    public float countDown = 61f;
+    public float countDown = 151f;
     public float currcountDown;
     private TMP_Text tMP_Text;
 

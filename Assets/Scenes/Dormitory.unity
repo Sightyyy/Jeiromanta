@@ -2514,11 +2514,11 @@ MonoBehaviour:
   player: {fileID: 485086749}
   respawnPoint: {fileID: 1213996521}
   bossCanvas: {fileID: 161092809}
-  timer: {fileID: 0}
+  timer: {fileID: 878834311}
   Entrance: {fileID: 1300308765}
   bossMesh: {fileID: 352669681}
   bossCollider: {fileID: 352669680}
-  laserCooldown: 3
+  laserCooldown: 2
 --- !u!1 &370689941
 GameObject:
   m_ObjectHideFlags: 0
@@ -3641,11 +3641,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1441987729973511459, guid: fde84f512b11a6b41bfb61ebc6fbc36b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000004278879
+      value: -0.000000004278879
       objectReference: {fileID: 0}
     - target: {fileID: 1441987729973511459, guid: fde84f512b11a6b41bfb61ebc6fbc36b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.4149776e-10
+      value: 4.4149776e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3257777571849090486, guid: fde84f512b11a6b41bfb61ebc6fbc36b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6657,7 +6657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff0d1b15b249254989ec4d29811ec5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countDown: 61
+  countDown: 151
   currcountDown: 0
 --- !u!114 &878834314
 MonoBehaviour:

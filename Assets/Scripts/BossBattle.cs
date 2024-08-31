@@ -13,7 +13,7 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private GameObject Entrance;
     [SerializeField] private MeshRenderer bossMesh;
     [SerializeField] private CapsuleCollider bossCollider;
-    public float laserCooldown = 2f;
+    public float laserCooldown = 1f;
     private float laserCooldownTimer;
     private LaserNode laserNode;
     private bool deathStatus;
