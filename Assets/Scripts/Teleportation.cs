@@ -8,13 +8,16 @@ public class Teleportation : MonoBehaviour
     [SerializeField] private int minimumLevelRequirement;
     private bool isPlayerNear = false;
 
+    Lobby lobby;
     void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
         {
             // Move to the new scene and position the player
             if (GameManager.GetCurrentLevel() < minimumLevelRequirement) return;
-            SceneManager.LoadScene(sceneToLoad);
+            {
+                SceneManager.LoadScene(sceneToLoad);
+            }
         }
     }
 

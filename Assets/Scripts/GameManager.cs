@@ -71,10 +71,10 @@ public class GameManager : MonoBehaviour
         {
             currentPlayer = Instantiate(playerPrefab, new Vector3 (0, 1, -20), playerPrefab.transform.rotation);
         }
-        else if(currentScene == "MainScene" && next.name == "Dormitory")
-        {
-            currentPlayer = Instantiate(playerPrefab, new Vector3 (0, 1, -20), playerPrefab.transform.rotation);
-        }
+        // else if(currentScene == "MainScene" && next.name == "Dormitory")
+        // {
+        //     currentPlayer = Instantiate(playerPrefab, new Vector3 (0, 1, -20), playerPrefab.transform.rotation);
+        // }
         else if(currentScene == "House" && next.name == "MainScene")
         {
             currentPlayer = Instantiate(playerPrefab, new Vector3 (-25, 1, -25), playerPrefab.transform.rotation);

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    AudioCollection audioCollection;
+    public void Awake()
+    {
+        audioCollection = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioCollection>();
+    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.E))
@@ -19,6 +24,7 @@ public class PlayerInteract : MonoBehaviour
                     if (npcInteractable != null)
                     {
                         npcInteractable.Interact();
+                        audioCollection.StopPlaySFX();
                     }
                 }
                 else if(collider.CompareTag("Interactable") && collider.name.StartsWith("HackPanel"))
@@ -28,6 +34,7 @@ public class PlayerInteract : MonoBehaviour
                     {
                         Debug.Log("Pass");
                         hpInteract.Interact();
+                        audioCollection.StopPlaySFX();
                     }
                 }
                 else if(collider.CompareTag("Interactable") && collider.name.StartsWith("Exit"))
@@ -37,6 +44,7 @@ public class PlayerInteract : MonoBehaviour
                     {
                         Debug.Log("Pass");
                         mainHPInteract.Interact();
+                        audioCollection.StopPlaySFX();
                     }
                 }
             }

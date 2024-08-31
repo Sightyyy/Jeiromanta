@@ -25,6 +25,14 @@ public class PlayerMovement : MonoBehaviour
     private enum MovementState { idle, running }
     private BossActivation bossActivation;
 
+    AudioCollection audioCollection;
+    private bool isWalking;
+
+    public void Awake()
+    {
+        audioCollection = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioCollection>();
+    }
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -56,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= lastDodgeTime + dodgeCooldown)
         {
             StartDodge();
+            audioCollection.PlaySFX(audioCollection.dodge);
         }
 
         // Arah pergerakan pemain mengikuti arah kamera, dengan mempertimbangkan kemiringan
@@ -87,21 +96,44 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotasi horizontal pemain mengikuti input mouse yang sudah dibalik
         transform.Rotate(Vector3.up * mouseX);
+
+        // Handle audio based on player movement
+        HandleWalkingSound();
+    }
+
+    private void HandleWalkingSound()
+    {
+        if (x != 0f || y != 0f)
+        {
+            if (!isWalking)
+            {
+                audioCollection.PlaySFXLoop(audioCollection.walk);
+                isWalking = true;
+            }
+        }
+        else
+        {
+            if (isWalking)
+            {
+                audioCollection.StopPlaySFX();
+                isWalking = false;
+            }
+        }
     }
 
     private void FixedUpdate()
-{
-    if (isDodging)
     {
-        Dodge();
+        if (isDodging)
+        {
+            Dodge();
+        }
+        else
+        {
+            // Terapkan gaya dorong untuk membantu mendaki
+            Vector3 force = moveDir * speed * Time.fixedDeltaTime;
+            rb.AddForce(force, ForceMode.VelocityChange);
+        }
     }
-    else
-    {
-        // Terapkan gaya dorong untuk membantu mendaki
-        Vector3 force = moveDir * speed * Time.fixedDeltaTime;
-        rb.AddForce(force, ForceMode.VelocityChange);
-    }
-}
 
     private void UpdateAnimationState()
     {
@@ -139,26 +171,24 @@ public class PlayerMovement : MonoBehaviour
 
     // Fungsi untuk menyesuaikan arah gerakan sesuai dengan kemiringan
     private Vector3 GetSlopeAdjustedMoveDirection(Vector3 inputDirection)
-{
-    RaycastHit hit;
-    if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, terrainLayer))
     {
-        Vector3 slopeNormal = hit.normal;
-        Vector3 slopeForward = Vector3.Cross(slopeNormal, transform.right).normalized;
-        // Debug.Log("Slope Normal: " + slopeNormal);
-        // Debug.Log("Slope Forward: " + slopeForward);
-        return Vector3.ProjectOnPlane(inputDirection, slopeNormal).normalized * speed;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, terrainLayer))
+        {
+            Vector3 slopeNormal = hit.normal;
+            Vector3 slopeForward = Vector3.Cross(slopeNormal, transform.right).normalized;
+            return Vector3.ProjectOnPlane(inputDirection, slopeNormal).normalized * speed;
+        }
+        return inputDirection;
     }
-    return inputDirection;
-}
 
     private void OnDrawGizmos()
-{
-    if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, terrainLayer))
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, hit.point);
-        Gizmos.DrawRay(hit.point, hit.normal);
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, terrainLayer))
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, hit.point);
+            Gizmos.DrawRay(hit.point, hit.normal);
+        }
     }
-}
 }

@@ -3323,8 +3323,9 @@ MonoBehaviour:
   UIButtonClick: {fileID: 8300000, guid: 320be9efefd10244c8b79e5cba206a2a, type: 3}
   UIBackButtonClick: {fileID: 8300000, guid: c6d7da3e27aba084b96fa59412407674, type: 3}
   walk: {fileID: 8300000, guid: 3ab0e7da8caf99b46b04c855a2bdcd0b, type: 3}
-  levelEnter: {fileID: 0}
-  glitched: {fileID: 0}
+  dodge: {fileID: 0}
+  zapped: {fileID: 0}
+  laser: {fileID: 0}
 --- !u!4 &1397869468
 Transform:
   m_ObjectHideFlags: 0
@@ -4187,6 +4188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14ea826cbd1da84e91d7bbd721301cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggle: {fileID: 2122616892}
+  windowedWidth: 1280
+  windowedHeight: 720
 --- !u!114 &1714734483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4250,7 +4254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

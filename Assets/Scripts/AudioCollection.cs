@@ -18,8 +18,9 @@ public class AudioCollection : MonoBehaviour
     public AudioClip UIButtonClick;
     public AudioClip UIBackButtonClick;
     public AudioClip walk;
-    public AudioClip levelEnter;
-    public AudioClip glitched;
+    public AudioClip dodge;
+    public AudioClip zapped;
+    public AudioClip laser;
 
     public void ButtonPress()
     {
@@ -42,10 +43,20 @@ public class AudioCollection : MonoBehaviour
     {
         BGM.Stop();
     }
+    public void StopPlaySFX()
+    {
+        SFX.Stop();
+    }
 
     public void PlaySFX(AudioClip clip)
     {
         SFX.PlayOneShot(clip);
+    }
+    public void PlaySFXLoop(AudioClip clip)
+    {
+        SFX.clip = clip;
+        SFX.loop = true;
+        SFX.Play();
     }
 
 }
